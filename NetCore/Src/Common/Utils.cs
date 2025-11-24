@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Security.Cryptography;
 using System.Text;
 using VeriFactu.Config;
@@ -166,7 +167,7 @@ namespace VeriFactu.Common
                 Logger.Log(msg);
 
         }
-
+        
         #endregion
 
     }
