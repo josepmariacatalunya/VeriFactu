@@ -228,14 +228,14 @@ namespace VeriFactu.Blockchain
             {
 
                 // No hay eslabones
-                File.Delete(BlockchainVarFileName);
+                File.Delete(BlockchainVarTableName);
 
             }
             else 
             {
 
                 // Escribo el valor de la variables actuales
-                File.WriteAllText(BlockchainVarFileName, $"{CurrentID}{_CsvSeparator}" +    // 0
+                File.WriteAllText(BlockchainVarTableName, $"{CurrentID}{_CsvSeparator}" +    // 0
                     $"{CurrentTimeStamp}{_CsvSeparator}" +                                  // 1
                     $"{Current.Huella}{_CsvSeparator}" +                                    // 2
                     $"{Current.IDFactura.FechaExpedicion}{_CsvSeparator}" +                 // 3
@@ -278,13 +278,13 @@ namespace VeriFactu.Blockchain
 
             string line = GetControFilelLine();
 
-            if (!Settings.Current.DisableBlockchainDelete && File.Exists(BlockchainDataFileName))
-                File.Copy(BlockchainDataFileName, BlockchainDataPreviousFileName, overwrite: true);
+            if (!Settings.Current.DisableBlockchainDelete && File.Exists(BlockchainDataTableName))
+                File.Copy(BlockchainDataTableName, BlockchainDataPreviousTableName, overwrite: true);
 
             if (csvLines == null)
-                File.AppendAllText(BlockchainDataFileName, $"{line}\n");
+                File.AppendAllText(BlockchainDataTableName, $"{line}\n");
             else
-                File.AppendAllLines(BlockchainDataFileName, csvLines);
+                File.AppendAllLines(BlockchainDataTableName, csvLines);
 
         }
 
@@ -383,29 +383,29 @@ namespace VeriFactu.Blockchain
         public Registro Previous { get; private set; }
 
         /// <summary>
-        /// Path del directorio de archivado de los datos de la
+        /// Tabla de archivado de los datos de la
         /// cadena.
         /// </summary>
         public string BlockchainPath { get; private set; }
 
         /// <summary>
-        /// Archivo que almacena el valor de las variables en curso
+        /// Tabla que almacena el valor de las variables en curso
         /// de la cadena.
         /// </summary>
-        public string BlockchainVarFileName => $"{BlockchainPath}_{SellerID}.csv";
+        public string BlockchainVarTableName => $"Blockchain{SellerID}";
 
         /// <summary>
-        /// Archivo copia de seguridad que almacena una porción del Blockchain correspondiente
-        /// a los movimientos de un mes excepto el último movimiento. Es la copia del archivo
-        /// con el nombre BlockchainDataFileName antes del registro del último movimiento.
+        /// Tabla copia de seguridad que almacena una porción del Blockchain correspondiente
+        /// a los movimientos el último movimiento. Es la copia de la tabla
+        /// con el nombre BlockchainDataTableName antes del registro del último movimiento.
         /// </summary>
-        public string BlockchainDataPreviousFileName => $"{BlockchainPath}{CurrentTimeStamp:yyyyMM}.PREV.csv";
+        public string BlockchainDataPreviousTableName => $"PreviousData{SellerID}";
 
         /// <summary>
-        /// Archivo que almacena una porción del Blockchain correspondiente
-        /// a los movimientos de un mes.
+        /// Tabla que almacena una porción del Blockchain correspondiente
+        /// a los movimientos.
         /// </summary>
-        public string BlockchainDataFileName => $"{BlockchainPath}{CurrentTimeStamp:yyyyMM}.csv";
+        public string BlockchainDataTableName => $"Data{SellerID}";
 
         #endregion
 
@@ -436,18 +436,18 @@ namespace VeriFactu.Blockchain
                 throw new InvalidOperationException($"Revise el archivo de configuración {Settings.FileName}," +
                     $" el valor de ConnectionString debe ser el una cadena de conexión válida a la base de datos Verifactu.");
 
-            var dirs = Directory.GetDirectories(Settings.Current.BlockchainPath);
+            var tables = DbUtils.GetDatabaseTablesOfId(Settings.Current.ConnectionString);//s´ha de revisar pel dni o cif
 
-            foreach (var dir in dirs)
+            foreach (var table in tables)
             {
 
-                var sellerID = Path.GetFileName(dir);
+                var sellerID = table.Replace("Id", null);
                 var blockchain = new BlockchainDb(sellerID);
 
-                if (File.Exists(blockchain.BlockchainVarFileName))
+                if (DbUtils.TableExists(Settings.Current.ConnectionString, blockchain.BlockchainVarTableName))
                 {
 
-                    var lineVarData = File.ReadAllText(blockchain.BlockchainVarFileName);
+                    var lineVarData = File.ReadAllText(blockchain.BlockchainVarTableName);
                     var valuesVarData = lineVarData.Split(_CsvSeparator);
 
                     var currentID = valuesVarData[0];
@@ -571,8 +571,8 @@ namespace VeriFactu.Blockchain
                 throw new InvalidOperationException($"Se ha intentado borrar el registro" +
                     $" {registro.Huella} que no coincide con el último {Current.Huella}");
 
-            var blockchainDataFileName = BlockchainDataFileName;
-            var blockchainDataPreviousFileName = BlockchainDataPreviousFileName;
+            var blockchainDataFileName = BlockchainDataTableName;
+            var blockchainDataPreviousFileName = BlockchainDataPreviousTableName;
 
             Remove();
 

@@ -63,5 +63,43 @@ namespace VeriFactu.Common
             }
 #pragma warning restore CS0618 // Review SQL queries for security vulnerabilities
         }
+        /// <summary>
+        /// Devuelve todas las tablas de la base de datos especificada en la cadena de conexión.
+        /// </summary>
+        /// <param name="connectionstring"></param>
+        /// <returns></returns>
+        public static List<string> GetDatabaseTablesOfId(string connectionstring)
+        {
+            var tables = new List<string>();
+            using (var connection = new System.Data.SqlClient.SqlConnection(connectionstring))
+            {
+                connection.Open();
+                using (var command = new System.Data.SqlClient.SqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Id%' ORDER BY TABLE_NAME", connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            tables.Add(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+            return tables;
+        }
+
+        public static bool TableExists(string connectionstring, string tableName)
+        {
+            using (var connection = new System.Data.SqlClient.SqlConnection(connectionstring))
+            {
+                connection.Open();
+                using (var command = new System.Data.SqlClient.SqlCommand("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = @tableName", connection))
+                {
+                    command.Parameters.AddWithValue("@tableName", tableName);
+                    var result = (int)command.ExecuteScalar();
+                    return result > 0;
+                }
+            }
+        }
     }
 }
