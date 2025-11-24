@@ -210,6 +210,212 @@
             </summary>
             <returns>Representación textual de la instancia.</returns>
         </member>
+        <member name="T:VeriFactu.Blockchain.BlockchainDb">
+            <summary>
+            Representa una cadena de bloques.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Blockchain.BlockchainDb._CsvSeparator">
+            <summary>
+            Separador para los archivos csv.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Blockchain.BlockchainDb._Locker">
+            <summary>
+            Bloqueo para thread safe.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.#cctor">
+            <summary>
+            Constructor estático.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID">Vendedor al que pertenece la cadena de bloques.</param>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.GetBlockchainPath(System.String)">
+            <summary>
+            Devuelve la ruta de almacenamiento de la cadena
+            de bloques.
+            </summary>
+            <param name="sellerID">Emisor al que pertenece la
+            cadena de bloques a gestionar.</param>
+            <returns>Ruta de almacenamiento de la cadena
+            de bloques.</returns>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.GetEncadenamiento">
+            <summary>
+            Devuelve un encadenamiento con el último elemento
+            de la cadena.
+            </summary>
+            <returns>Encadenamiento con el último elemento
+            de la cadena.</returns>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.Insert(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Inserta un eslabón en la cadena.
+            </summary>
+            <param name="registro">Registro a encadenar.</param>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.Remove">
+            <summary>
+            Elimina el útlimo elemento añadido a la cadena.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Se lanza si no se encuentra el último eslabón.</exception>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.Write(System.Collections.Generic.List{System.String})">
+            <summary>
+            Escribe los datos de la cadena en disco.
+            </summary>
+            <param name="csvLines">Líneas a escribir en el csv de control.</param>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.WriteVar">
+            <summary>
+            Almacena los datos del último elemento de la cadena
+            en disco.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.GetControFilelLine">
+            <summary>
+            Devuelve un texto para el archivo csv de control
+            representando la inserción en la cadena de bloques
+            con los datos necesarios.
+            </summary>
+            <returns>Linea de archivo csv</returns>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.WriteData(System.Collections.Generic.List{System.String})">
+            <summary>
+            Añade los datos del último elemento al archivo de control
+            de la cadena.
+            </summary>
+            <param name="csvLines">Líneas de control a incluir en el
+            archivo csv de control.</param>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.RestorePreviousData(System.String,System.String)">
+            <summary>
+            Recupera los datos del archivo de la cadena de bloques previo
+            a la inserción del último elemento.
+            </summary>
+            <param name="blockchainDataFileName">Archivo de datos a restaurar.</param>
+            <param name="blockchainDataPreviousFileName">Copia anterior utilizada para restaurar.</param>
+            <exception cref="T:System.InvalidOperationException">Se lanza si no se encuentra archivo previo a restaurar.</exception>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.Initialized">
+            <summary>
+            Indica si el sistema de cadena de bloques está inicializado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.SellerID">
+            <summary>
+            Identificador del vendedor.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.CurrentID">
+            <summary>
+            Identificador del último eslabón de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.CurrentTimeStamp">
+            <summary>
+            Momento de generación del último eslabón de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.Current">
+            <summary>
+            Último elemento de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.PreviousID">
+            <summary>
+            Identificador del penúltimo eslabón de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.PreviousTimeStamp">
+            <summary>
+            Momento de generación del penúltimo eslabón de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.Previous">
+            <summary>
+            Penúltimo elemento de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainPath">
+            <summary>
+            Path del directorio de archivado de los datos de la
+            cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainVarFileName">
+            <summary>
+            Archivo que almacena el valor de las variables en curso
+            de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainDataPreviousFileName">
+            <summary>
+            Archivo copia de seguridad que almacena una porción del Blockchain correspondiente
+            a los movimientos de un mes excepto el último movimiento. Es la copia del archivo
+            con el nombre BlockchainDataFileName antes del registro del último movimiento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainDataFileName">
+            <summary>
+            Archivo que almacena una porción del Blockchain correspondiente
+            a los movimientos de un mes.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.Get(System.String)">
+            <summary>
+            Devuelve la instancia correspondiente a la cadena de bloques
+            de un emisor de facturas.
+            </summary>
+            <param name="sellerID">Id. del emisor de factura.</param>
+            <returns>Instancia correspondiente a la cadena de bloques
+            de un emisor de facturas.</returns>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.LoadBlockchainsFromDisk">
+            <summary>
+            Carga todas las cadenas de bloques.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.Add(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Añade un elemento a la cadena de bloques.
+            </summary>
+            <param name="registro">Registro a añadir.</param>
+            <exception cref="T:System.Exception">Si no se puede añadir el eslabón en la cadena.</exception>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.Add(System.Collections.Generic.List{VeriFactu.Xml.Factu.Registro})">
+            <summary>
+            Añade una lista de elementos a la cadena de bloques.
+            </summary>
+            <param name="registros">Registros a añadir.</param>
+            <exception cref="T:System.Exception">Si no se puede añadir el eslabón en la cadena.</exception>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.Delete(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Elimina el último elememto añadido a la cadena.
+            </summary>
+            <param name="registro">Registro a eliminar.
+            Sólo puede eliminarse el último elemento añadido.</param> 
+            <exception cref="T:System.InvalidOperationException">
+            Si se itenta eliminar un registro que no es el último.
+            </exception>
+        </member>
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns>Representación textual de la instancia.</returns>
+        </member>
         <member name="T:VeriFactu.Business.FlowControl.IntervalWorker">
             <summary>
             Clase para ejecutar en un hilo de fondo
@@ -3753,7 +3959,7 @@
         </member>
         <member name="F:VeriFactu.Common.Logger._LogTime">
             <summary>
-            Almacena los mensajes.
+            Almacena marca de tiempo de los mensajes.
             </summary>
         </member>
         <member name="F:VeriFactu.Common.Logger._Count">
@@ -4040,6 +4246,12 @@
             <summary>
             Ruta al directorio que actuará almacenamiento
             del registro de mensajes del sistema.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Config.Settings.ConnectionString">
+            <summary>
+            Cadena de conexión a la base de datos que almacenará
+            el blockchain para sistemas centralidados.
             </summary>
         </member>
         <member name="P:VeriFactu.Config.Settings.CertificateSerial">

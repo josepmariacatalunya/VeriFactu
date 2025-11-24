@@ -53,6 +53,9 @@
     <Compile Include="..\NetCore\Src\Blockchain\Blockchain.cs">
       <Link>Src\Blockchain\Blockchain.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Blockchain\BlockchainDb.cs">
+      <Link>Src\Blockchain\BlockchainDb.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\FlowControl\IntervalWorker.cs">
       <Link>Src\Business\FlowControl\IntervalWorker.cs</Link>
     </Compile>

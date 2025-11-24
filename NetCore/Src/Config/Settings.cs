@@ -362,7 +362,12 @@ namespace VeriFactu.Config
         /// </summary>
         [XmlElement("LogPath")]
         public string LogPath { get; set; }
-
+        /// <summary>
+        /// Cadena de conexión a la base de datos que almacenará
+        /// el blockchain para sistemas centralidados.
+        /// </summary>
+        [XmlElement("ConnectionString")]
+        public string ConnectionString { get; set; }
         /// <summary>
         /// Número de serie del certificado a utilizar. Mediante este número
         /// de serie se selecciona del almacén de certificados de windows

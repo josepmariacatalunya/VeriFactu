@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VeriFactu</RootNamespace>
     <AssemblyName>VeriFactu</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -51,6 +51,9 @@
   <ItemGroup>
     <Compile Include="..\NetCore\Src\Blockchain\Blockchain.cs">
       <Link>Src\Blockchain\Blockchain.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Blockchain\BlockchainDb.cs">
+      <Link>Src\Blockchain\BlockchainDb.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Business\FlowControl\IntervalWorker.cs">
       <Link>Src\Business\FlowControl\IntervalWorker.cs</Link>
