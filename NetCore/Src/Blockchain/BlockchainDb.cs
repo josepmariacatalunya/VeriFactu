@@ -80,7 +80,7 @@ namespace VeriFactu.Blockchain
         static BlockchainDb()
         {
 
-            LoadBlockchainsFromDisk();
+            LoadBlockchainsFromDb();
             Initialized = true;
 
         }
@@ -429,10 +429,10 @@ namespace VeriFactu.Blockchain
         /// Carga todas las cadenas de bloques.
         /// </summary>
         /// <exception cref="InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
-        public static void LoadBlockchainsFromDisk()
+        public static void LoadBlockchainsFromDb()
         {
 
-            if (string.IsNullOrEmpty(Settings.Current.BlockchainPath) || !Directory.Exists(Settings.Current.BlockchainPath))
+            if (string.IsNullOrEmpty(Settings.Current.ConnectionString) || !Directory.Exists(Settings.Current.BlockchainPath))
                 throw new InvalidOperationException($"Revise el archivo de configuración {Settings.FileName}," +
                     $" el valor de BlockchainPath debe ser el de un directorio válido.");
 
@@ -475,7 +475,19 @@ namespace VeriFactu.Blockchain
             }
 
         }
-
+        public static bool DatabaseExists(string nameDb)
+        { 
+            using(var connection = new System.Data.SqlClient.SqlConnection(Settings.Current.ConnectionString))
+            {
+                connection.Open();
+                using(var command = new System.Data.SqlClient.SqlCommand(
+                    $"SELECT database_id FROM sys.databases WHERE Name = '{nameDb}'", connection))
+                {
+                    var result = command.ExecuteScalar();
+                    return (result != null);
+                }
+            }
+        }
         #endregion
 
         #region Métodos Públicos de Instancia

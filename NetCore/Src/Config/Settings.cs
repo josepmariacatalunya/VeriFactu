@@ -225,6 +225,7 @@ namespace VeriFactu.Config
                 BlockchainPath = $"{Path}Blockchains{_PathSep}",
                 InvoicePath = $"{Path}Invoices{_PathSep}",
                 LogPath = $"{Path}Log{_PathSep}",
+                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=BasicAuthWasm;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;MultiSubnetFailover=False",
                 CertificateSerial = "",
                 CertificateThumbprint = "",
                 CertificatePath = "",
