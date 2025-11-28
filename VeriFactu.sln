@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verifactu.Com.ARM64", "Inte
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interop", "Interop", "{B87892EF-3834-4A61-ADB6-79CA0ED59E93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerifactuTestClass", "VerifactuTestClass\VerifactuTestClass.csproj", "{3840C8BD-F5CC-4448-B9E5-AD35ED435A7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestVerifactuTestClass", "TestVerifactuTestClass\TestVerifactuTestClass.csproj", "{21B51DEC-520A-4641-ABDC-2A2B73017281}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,14 @@ Global
 		{89317C7A-770B-4293-976B-F9BE449765C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89317C7A-770B-4293-976B-F9BE449765C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89317C7A-770B-4293-976B-F9BE449765C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3840C8BD-F5CC-4448-B9E5-AD35ED435A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3840C8BD-F5CC-4448-B9E5-AD35ED435A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3840C8BD-F5CC-4448-B9E5-AD35ED435A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3840C8BD-F5CC-4448-B9E5-AD35ED435A7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B51DEC-520A-4641-ABDC-2A2B73017281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B51DEC-520A-4641-ABDC-2A2B73017281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B51DEC-520A-4641-ABDC-2A2B73017281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B51DEC-520A-4641-ABDC-2A2B73017281}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
