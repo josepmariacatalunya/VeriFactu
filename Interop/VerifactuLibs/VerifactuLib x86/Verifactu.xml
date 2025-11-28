@@ -146,20 +146,20 @@
             cadena.
             </summary>
         </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainVarFileName">
+        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainVarName">
             <summary>
             Archivo que almacena el valor de las variables en curso
             de la cadena.
             </summary>
         </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainDataPreviousFileName">
+        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainDataPreviousName">
             <summary>
             Archivo copia de seguridad que almacena una porción del Blockchain correspondiente
             a los movimientos de un mes excepto el último movimiento. Es la copia del archivo
             con el nombre BlockchainDataFileName antes del registro del último movimiento.
             </summary>
         </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainDataFileName">
+        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainDataName">
             <summary>
             Archivo que almacena una porción del Blockchain correspondiente
             a los movimientos de un mes.
@@ -348,27 +348,27 @@
         </member>
         <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainPath">
             <summary>
-            Path del directorio de archivado de los datos de la
+            Tabla de archivado de los datos de la
             cadena.
             </summary>
         </member>
-        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainVarFileName">
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainVarName">
             <summary>
-            Archivo que almacena el valor de las variables en curso
+            Tabla que almacena el valor de las variables en curso
             de la cadena.
             </summary>
         </member>
-        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainDataPreviousFileName">
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainDataPreviousName">
             <summary>
-            Archivo copia de seguridad que almacena una porción del Blockchain correspondiente
-            a los movimientos de un mes excepto el último movimiento. Es la copia del archivo
-            con el nombre BlockchainDataFileName antes del registro del último movimiento.
+            Tabla copia de seguridad que almacena una porción del Blockchain correspondiente
+            a los movimientos el último movimiento. Es la copia de la tabla
+            con el nombre BlockchainDataTableName antes del registro del último movimiento.
             </summary>
         </member>
-        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainDataFileName">
+        <member name="P:VeriFactu.Blockchain.BlockchainDb.BlockchainDataName">
             <summary>
-            Archivo que almacena una porción del Blockchain correspondiente
-            a los movimientos de un mes.
+            Tabla que almacena una porción del Blockchain correspondiente
+            a los movimientos.
             </summary>
         </member>
         <member name="M:VeriFactu.Blockchain.BlockchainDb.Get(System.String)">
@@ -380,7 +380,7 @@
             <returns>Instancia correspondiente a la cadena de bloques
             de un emisor de facturas.</returns>
         </member>
-        <member name="M:VeriFactu.Blockchain.BlockchainDb.LoadBlockchainsFromDisk">
+        <member name="M:VeriFactu.Blockchain.BlockchainDb.LoadBlockchainsFromDb">
             <summary>
             Carga todas las cadenas de bloques.
             </summary>
@@ -3881,6 +3881,39 @@
             <param name="vatNumber">Número de IVA intracomunitario
             incluyendo el código de país.</param>
             <returns>True si es válido y false en caso contario.</returns>
+        </member>
+        <member name="T:VeriFactu.Common.DbUtils">
+            <summary>
+            Algunas utilidades de base de datos.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.DbUtils.GetDatabaseName(System.String)">
+            <summary>
+            Verifica si una cadena de conexión contiene el nombre de la base de datos
+            </summary>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VeriFactu.Common.DbUtils.DatabaseExists(System.String)">
+            <summary>
+            Verifica si "Verifactu" existe en la base de datos especificada en la cadena de conexión.
+            </summary>
+            <param name="connectionstring"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VeriFactu.Common.DbUtils.CreateDatabase(System.String)">
+            <summary>
+            CREA LA BASE DE DATOS "Verifactu" en la base de datos especificada en la cadena de conexión.
+            </summary>
+            <param name="connectionstring"></param>
+            <returns></returns>
+        </member>
+        <member name="M:VeriFactu.Common.DbUtils.GetDatabaseTablesOfId(System.String)">
+            <summary>
+            Devuelve todas las tablas de la base de datos especificada en la cadena de conexión.
+            </summary>
+            <param name="connectionstring"></param>
+            <returns></returns>
         </member>
         <member name="T:VeriFactu.Common.Exceptions.ClearPostException">
             <summary>

@@ -132,7 +132,11 @@ namespace VeriFactu.Config
 
             Get();
 
-            BlockchainInitialized = Blockchain.Blockchain.Initialized; // Inicia cadena de bloques
+            if (Current.ConnectionString is null)
+                BlockchainInitialized = Blockchain.Blockchain.Initialized; // Inicia cadena de bloques
+            else
+                BlockchainInitialized = Blockchain.BlockchainDb.Initialized; //Inicia cadena de bloques en la db
+                
             Current.SistemaInformatico.IndicadorMultiplesOT = Seller.GetSellers().Count > 1 ? "S" : "N"; // Valor multiples OT
 
         }

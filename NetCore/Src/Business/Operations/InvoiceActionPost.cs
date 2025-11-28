@@ -40,6 +40,7 @@
 using System;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using VeriFactu.Blockchain;
 using VeriFactu.Common.Exceptions;
 using VeriFactu.Config;
 using VeriFactu.Net;
@@ -74,7 +75,10 @@ namespace VeriFactu.Business.Operations
         public InvoiceActionPost(Invoice invoice) : base(invoice)
         {
 
-            BlockchainManager = Blockchain.Blockchain.Get(Invoice.SellerID);
+            if (Settings.Current.ConnectionString is null)
+                BlockchainManager = Blockchain.Blockchain.Get(Invoice.SellerID);
+            else
+                BlockchainManager = Blockchain.BlockchainDb.Get(invoice.SellerID);
 
         }
 
@@ -219,7 +223,7 @@ namespace VeriFactu.Business.Operations
         /// <summary>
         /// Gestor de cadena de bloques para el registro.
         /// </summary>
-        public Blockchain.Blockchain BlockchainManager { get; private set; }
+        public IBlockchain BlockchainManager { get; private set; }
 
         #endregion
 
