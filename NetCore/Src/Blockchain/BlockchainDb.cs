@@ -119,7 +119,7 @@ namespace VeriFactu.Blockchain
         {
 
             //var dir = $"{Settings.Current.BlockchainPath}{sellerID}";
-            var tablename = sellerID;
+            string tablename = BlockchainVarName + sellerID;
             var connectionstring = Settings.Current.ConnectionString;
             if (!DbUtils.TableExists(connectionstring, tablename))
                 DbUtils.CreateTable(connectionstring, tablename);
@@ -238,7 +238,7 @@ namespace VeriFactu.Blockchain
             {
 
                 // Escribo el valor de la variables actuales
-                string value = $"{CurrentTimeStamp}, {Current.Huella}, {Current.IDFactura.FechaExpedicion}, {Current.IDFactura.IDEmisor}, {Current.IDFactura.NumSerie}";
+                string value = $"'{CurrentTimeStamp}{_CsvSeparator}{Current.Huella}{_CsvSeparator}{Current.IDFactura.FechaExpedicion}{_CsvSeparator}{Current.IDFactura.IDEmisor}{_CsvSeparator}{Current.IDFactura.NumSerie}'";
                 DbUtils.Update(Settings.Current.ConnectionString, BlockchainVarName, CurrentID, value);
             }
 
@@ -448,13 +448,16 @@ namespace VeriFactu.Blockchain
 
             foreach (var table in tables)
             {
-                var sellerID = table.Replace("Id", null);
+                var sellerID = table.Replace("Blockchain", null);
                 var blockchain = new BlockchainDb(sellerID);
 
                 if (DbUtils.TableExists(connectionstring, blockchain.BlockchainVarName))
                 {
 
                     var lineVarData = DbUtils.Read(connectionstring, blockchain.BlockchainVarName);
+                    if (string.IsNullOrEmpty(lineVarData))
+                        continue;
+
                     var valuesVarData = lineVarData.Split(_CsvSeparator);
 
                     var currentID = valuesVarData[0];

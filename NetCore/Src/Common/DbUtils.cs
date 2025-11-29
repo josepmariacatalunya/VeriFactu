@@ -132,7 +132,8 @@ namespace VeriFactu.Common
             using (var connection = new System.Data.SqlClient.SqlConnection(connectionstring))
             {
                 connection.Open();
-                using (var command = new System.Data.SqlClient.SqlCommand($"CREATE TABLE {tablename} (id INT IDENTITY(1,1) PRIMARY KEY, Valores NVARCHAR(300) NOT NULL);", connection))
+                //using (var command = new System.Data.SqlClient.SqlCommand($"CREATE TABLE [{tablename}] ([id] INT IDENTITY(1,1) PRIMARY KEY, Valores NVARCHAR(300) NOT NULL);", connection))
+                using (var command = new System.Data.SqlClient.SqlCommand($"CREATE TABLE [{tablename}] ([id] INT PRIMARY KEY, Valores NVARCHAR(300) NOT NULL);", connection))
 
                 {
                     var result = command.ExecuteScalar();
@@ -151,7 +152,7 @@ namespace VeriFactu.Common
             using (var connection = new System.Data.SqlClient.SqlConnection(connectionstring))
             {
                 connection.Open();
-                using (var command = new System.Data.SqlClient.SqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Id%' ORDER BY TABLE_NAME", connection))
+                using (var command = new System.Data.SqlClient.SqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME LIKE 'Blockchain%' ORDER BY TABLE_NAME", connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {
@@ -184,14 +185,14 @@ namespace VeriFactu.Common
             using (var connection = new System.Data.SqlClient.SqlConnection(connectionstring))
             {
                 connection.Open();
-                if (TableExists(connectionstring, blockchainVarName))
+                if (!TableExists(connectionstring, blockchainVarName))
                 {
                     return false;
                 }
-                using (var command = new System.Data.SqlClient.SqlCommand($"INSERT INTO {blockchainVarName} (id, Valores) values ({id},{value} ", connection))
+                using (var command = new System.Data.SqlClient.SqlCommand($"INSERT INTO [{blockchainVarName}] ([id], [Valores]) values ({id},{value})", connection))
                 {
                     command.Connection = connection;
-                    var result = (int)command.ExecuteScalar();
+                    var result = (int)command.ExecuteNonQuery();
                     return result > 0;
                 }
             }
@@ -201,13 +202,18 @@ namespace VeriFactu.Common
         {
             using (var connection = new System.Data.SqlClient.SqlConnection(connectionstring))
             {
-                using (var command = new System.Data.SqlClient.SqlCommand($"SELECT * FROM {blockchainVarName}", connection))
+             connection.Open();
+                using (var command = new System.Data.SqlClient.SqlCommand($"SELECT TOP(1) * FROM [{blockchainVarName}] ORDER BY id DESC", connection))
                 {
                     using (var reader = command.ExecuteReader())
                     {
-                        reader.Read();
-                        return reader.GetString(1);
-                        
+                       var resultvalue = string.Empty;
+                        if (reader.Read())
+                        {
+                         resultvalue = reader.GetInt32(0) + ";" + reader.GetString(1);
+                        }
+
+                        return resultvalue;
                     }
                 }
             }

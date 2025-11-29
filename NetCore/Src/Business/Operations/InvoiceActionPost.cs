@@ -78,7 +78,7 @@ namespace VeriFactu.Business.Operations
             if (Settings.Current.ConnectionString is null)
                 BlockchainManager = Blockchain.Blockchain.Get(Invoice.SellerID);
             else
-                BlockchainManager = Blockchain.BlockchainDb.Get(invoice.SellerID);
+                BlockchainManager = Blockchain.BlockchainDb.Get(Invoice.SellerID);
 
         }
 

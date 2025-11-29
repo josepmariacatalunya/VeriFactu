@@ -13,12 +13,12 @@ public class SendFacturesVerifactu
     public bool EnviarFactura()
     {
         // Creamos una instacia de la clase factura
-        var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814")
+        var invoice = new Invoice("GIT-EJ-0013", new DateTime(2025, 11, 16), "43710521X")
         {
             InvoiceType = TipoFactura.F1,
-            SellerName = "WEFINZ GANDIA SL",
-            BuyerID = "B44531218",
-            BuyerName = "WEFINZ SOLUTIONS SL",
+            SellerName = "JOSEP MARIA MASAGUE ESCODA",
+            BuyerID = "B25721549",
+            BuyerName = "MASAGUE GESTIO SL SL",
             Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
             TaxItems = new List<TaxItem>() {
         new TaxItem()
@@ -41,6 +41,7 @@ public class SendFacturesVerifactu
 
             // Creamos la entrada de la factura
             var invoiceEntry = new InvoiceEntry(invoice);
+            invoiceEntry.Save();
             return true;
         }
         catch (Exception)
