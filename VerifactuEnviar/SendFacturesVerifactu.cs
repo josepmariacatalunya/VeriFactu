@@ -13,7 +13,7 @@ public class SendFacturesVerifactu
     public bool EnviarFactura()
     {
         // Creamos una instacia de la clase factura
-        var invoice = new Invoice("GIT-EJ-0013", new DateTime(2025, 11, 16), "43710521X")
+        var invoice = new Invoice("GIT-EJ-0016", new DateTime(2025, 11, 16), "43710521X")
         {
             InvoiceType = TipoFactura.F1,
             SellerName = "JOSEP MARIA MASAGUE ESCODA",
@@ -30,8 +30,8 @@ public class SendFacturesVerifactu
         new TaxItem()
         {
             TaxRate = 21,
-            TaxBase = 100,
-            TaxAmount = 21
+            TaxBase = 200,
+            TaxAmount = 42
         }
     }
         };
