@@ -350,3 +350,9 @@ MigrationBackup/
 .ionide/
 /TestVerifactuTestClass
 /VerifactuTestClass
+/Interop/VerifactuLibs/VerifactuLib ARM64/Verifactu.dll
+/Interop/VerifactuLibs/VerifactuLib ARM64/Verifactu.xml
+/Interop/VerifactuLibs/VerifactuLib x64/Verifactu.dll
+/Interop/VerifactuLibs/VerifactuLib x64/Verifactu.xml
+/Interop/VerifactuLibs/VerifactuLib x86/Verifactu.dll
+/Interop/VerifactuLibs/VerifactuLib x86/Verifactu.xml
