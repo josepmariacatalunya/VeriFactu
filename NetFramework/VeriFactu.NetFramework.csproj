@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;LE_480</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -170,6 +170,12 @@
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral.cs">
       <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesglose.cs">
       <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesglose.cs</Link>
     </Compile>
@@ -299,6 +305,9 @@
     <Compile Include="..\NetCore\Src\Common\Exceptions\SendException.cs">
       <Link>Src\Common\Exceptions\SendException.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Common\Exceptions\UnexpectedHtmlException.cs">
+      <Link>Src\Common\Exceptions\UnexpectedHtmlException.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Common\Logger.cs">
       <Link>Src\Common\Logger.cs</Link>
     </Compile>
@@ -370,6 +379,9 @@
     </Compile>
     <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonComma.cs">
       <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonComma.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonExcluded.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonExcluded.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonFalse.cs">
       <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonFalse.cs</Link>

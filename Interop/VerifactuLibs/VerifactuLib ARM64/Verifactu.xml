@@ -2678,6 +2678,54 @@
             </summary>
             <returns>Lista con los errores de un bloque en concreto.</returns>
         </member>
+        <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado">
+            <summary>
+            Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 20 (IGIC). Operaciones sujetas al IPSI.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado._DetalleDesglose">
+            <summary>
+            Interlocutor a validar.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado.#ctor(VeriFactu.Xml.Soap.Envelope,VeriFactu.Xml.Factu.Alta.RegistroAlta,VeriFactu.Xml.Factu.Alta.DetalleDesglose)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="envelope"> Sobre SOAP envío.</param>
+            <param name="registroAlta"> Registro alta factura.</param>
+            <param name="detalleDesglose"> DetalleDesglose a validar. </param>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado.GetBlockErrors">
+            <summary>
+            Obtiene los errores de un bloque en concreto.
+            </summary>
+            <returns>Lista con los errores de un bloque en concreto.</returns>
+        </member>
+        <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi">
+            <summary>
+            Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 21 (IGIC). Régimen simplificado.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi._DetalleDesglose">
+            <summary>
+            Interlocutor a validar.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi.#ctor(VeriFactu.Xml.Soap.Envelope,VeriFactu.Xml.Factu.Alta.RegistroAlta,VeriFactu.Xml.Factu.Alta.DetalleDesglose)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="envelope"> Sobre SOAP envío.</param>
+            <param name="registroAlta"> Registro alta factura.</param>
+            <param name="detalleDesglose"> DetalleDesglose a validar. </param>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi.GetBlockErrors">
+            <summary>
+            Obtiene los errores de un bloque en concreto.
+            </summary>
+            <returns>Lista con los errores de un bloque en concreto.</returns>
+        </member>
         <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.ValidatorRegistroAltaDetalleDesglose">
             <summary>
             Valida los datos de RegistroAlta Tercero.
@@ -3741,6 +3789,19 @@
             </summary>
             <param name="innerException">Excepción interna.</param>
         </member>
+        <member name="T:VeriFactu.Common.Exceptions.UnexpectedHtmlException">
+            <summary>
+            Representa una excepción cuando en una petición
+            a un web service se espera un xml y en su lugar
+            se obtiene un html en la respuesta.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Exceptions.UnexpectedHtmlException.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="html">Texto html obtenido cuando se esperaba xml.</param>
+        </member>
         <member name="T:VeriFactu.Common.Logger">
             <summary>
             Se encarga del log.
@@ -3753,7 +3814,7 @@
         </member>
         <member name="F:VeriFactu.Common.Logger._LogTime">
             <summary>
-            Almacena los mensajes.
+            Almacena marca de tiempo de los mensajes.
             </summary>
         </member>
         <member name="F:VeriFactu.Common.Logger._Count">
@@ -3823,6 +3884,13 @@
             la creación de una clase por clave.
             </summary>
         </member>
+        <member name="F:VeriFactu.Common.SingletonByKey`1._Lock">
+            <summary>
+            Sincroniza el acceso al diccionario de instancias: sin él, dos hilos
+            pueden superar a la vez la comprobación de existencia y el segundo
+            termina en ArgumentException (o corrompe el diccionario).
+            </summary>
+        </member>
         <member name="M:VeriFactu.Common.SingletonByKey`1.#ctor(System.String)">
             <summary>
             Constructor.
@@ -3867,17 +3935,15 @@
         </member>
         <member name="F:VeriFactu.Common.Utils._HashAlgorithms">
             <summary>
-            Algoritmos de digest disponibles.
+            Fábricas de algoritmos de digest disponibles. Se crea una instancia
+            nueva por cálculo: HashAlgorithm mantiene estado interno y compartir
+            una única instancia entre hilos corrompe los hashes calculados en
+            paralelo (la huella de la cadena de bloques).
             </summary>
         </member>
         <member name="F:VeriFactu.Common.Utils._Encodings">
             <summary>
             Codificaciones de texto a binario disponibles.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Common.Utils.HashAlgorithm">
-            <summary>
-            Algoritmo de hash.
             </summary>
         </member>
         <member name="P:VeriFactu.Common.Utils.Encoding">
@@ -3894,6 +3960,14 @@
             <summary>
             Constructor estático clase.
             </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Utils.ComputeHash(System.Byte[])">
+            <summary>
+            Calcula el hash de la entrada con el algoritmo configurado,
+            usando una instancia nueva por llamada (seguro entre hilos).
+            </summary>
+            <param name="input">Bytes de entrada.</param>
+            <returns>Hash calculado.</returns>
         </member>
         <member name="M:VeriFactu.Common.Utils.GetEncodedToHex(System.String)">
             <summary>
@@ -5108,7 +5182,7 @@
         <member name="M:VeriFactu.Net.Rest.Json.Parser.JsonParser.GetResult">
             <summary>
             Devuelve el resultado de la deserialización
-            de la cadena JSON.
+            de la cadena JSON como un objeto dinámico.
             </summary>
             <returns>resultado de la deserialización
             de la cadena JSON.</returns>
@@ -5178,7 +5252,7 @@
         <member name="M:VeriFactu.Net.Rest.Json.Parser.JsonParserReader.GetResult">
             <summary>
             Devuelve el resultado de la deserialización
-            de la cadena JSON.
+            de la cadena JSON en un objeto dinámico.
             </summary>
             <returns>resultado de la deserialización
             de la cadena JSON.</returns>
@@ -5271,6 +5345,27 @@
             </summary>
         </member>
         <member name="M:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonComma.#ctor(VeriFactu.Net.Rest.Json.Parser.Lexer.JsonLexer,System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="jsonLexer">Analizador léxico.</param>
+            <param name="start">Posición del inicio del
+            fragmento de texto dentro de la cadena completa JSON.</param>
+        </member>
+        <member name="T:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonExcluded">
+            <summary>
+            Fragmento obtenido del análisis léxico de una cadena
+            JSON que representa un carácter a excluir como saltos de línea
+            o espacios entre los pares clave-valor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonExcluded.Excluded">
+            <summary>
+            Indica si el token se debe excvluir de la
+            serialización.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonExcluded.#ctor(VeriFactu.Net.Rest.Json.Parser.Lexer.JsonLexer,System.Int32)">
             <summary>
             Constructor.
             </summary>
@@ -5493,6 +5588,12 @@
         <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonToken.Length">
             <summary>
             Longitud de la cadena de texto.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonToken.Excluded">
+            <summary>
+            Indica si el token se debe excluir de la
+            serialización.
             </summary>
         </member>
         <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonToken.Value">
@@ -8283,6 +8384,11 @@
             Operaciones de arrendamiento de local de negocio ('11').
             </summary>
         </member>
+        <member name="F:VeriFactu.Xml.Factu.Alta.ClaveRegimen.ArrendamientoLocalNecocioNoRetencion">
+            <summary>
+            Solo para compatibilidad con SII. No usar en VERI*FACTU.
+            </summary>
+        </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.ClaveRegimen.ObraPteDevengoAdmonPublica">
             <summary>
             <para> L8A: Factura con IVA pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administración Pública.</para>
@@ -8322,6 +8428,11 @@
             <summary>
             L8A: Régimen simplificado sólo para IVA ('20').
             L8B: Operaciones sujetas al IPSI
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Alta.ClaveRegimen.RegimenSimplificadoIpsi">
+            <summary>
+            L8B: Régimen simplificado IPSI
             </summary>
         </member>
         <member name="T:VeriFactu.Xml.Factu.Alta.DetalleDesglose">
@@ -8905,8 +9016,7 @@
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.TipoFactura.R5">
             <summary>
-            Factura Rectificativa en facturas simplificadas. Factura
-            emitida en sustitución de facturas simplificadas facturadas y declaradas
+            Factura Rectificativa en facturas simplificadas.
             </summary>
         </member>
         <member name="T:VeriFactu.Xml.Factu.Alta.TipoRectificativa">
@@ -12589,7 +12699,7 @@
             Texto del documento.
             </summary>
         </member>
-        <member name="M:Verifactu.IVfInvoice.SeOperationDate(System.DateTime)">
+        <member name="M:Verifactu.IVfInvoice.SetOperationDate(System.DateTime)">
             <summary>
             Establece la fecha operación en caso
             de que se necesaria.
@@ -12608,6 +12718,17 @@
             factura sustituida.
             </summary>
             <param name="taxItem">Datos factura sustituida.</param>
+        </member>
+        <member name="M:Verifactu.IVfInvoice.SetThirdPartyIssuer(System.String)">
+            <summary>
+            Establece el identificador que especifica si la factura ha sido
+            emitida por un tercero o por el destinatario. L6.
+            </summary>
+            <param name="thirdPartyType">
+            <para> Tipo de tercero emisor:</para>
+            <para> 'D': Destinatario.</para>
+            <para> 'T': Tercero.</para>
+            </param>
         </member>
         <member name="M:Verifactu.IVfInvoice.GetRegistroAnulacion">
             <summary>
@@ -12693,6 +12814,12 @@
             <summary>
             Fecha operación.
             </summary>        
+        </member>
+        <member name="F:Verifactu.VfInvoice._ThirdPartyIssuer">
+            <summary>
+            Identificador que especifica si la factura ha sido
+            emitida por un tercero o por el destinatario. L6.
+            </summary>
         </member>
         <member name="F:Verifactu.VfInvoice._Invoice">
             <summary>
@@ -12813,12 +12940,23 @@
             Texto del documento.
             </summary>
         </member>
-        <member name="M:Verifactu.VfInvoice.SeOperationDate(System.DateTime)">
+        <member name="M:Verifactu.VfInvoice.SetOperationDate(System.DateTime)">
             <summary>
             Establece la fecha operación en caso
             de que se necesaria.
             </summary>
             <param name="operationDate">Fecha operación.</param>
+        </member>
+        <member name="M:Verifactu.VfInvoice.SetThirdPartyIssuer(System.String)">
+            <summary>
+            Establece el identificador que especifica si la factura ha sido
+            emitida por un tercero o por el destinatario. L6.
+            </summary>
+            <param name="thirdPartyType">
+            <para> Tipo de tercero emisor:</para>
+            <para> 'D': Destinatario.</para>
+            <para> 'T': Tercero.</para>
+            </param>
         </member>
         <member name="M:Verifactu.VfInvoice.GetRegistroAlta">
             <summary>
