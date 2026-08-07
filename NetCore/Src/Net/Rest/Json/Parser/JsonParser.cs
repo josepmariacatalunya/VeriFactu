@@ -126,7 +126,14 @@ namespace VeriFactu.Net.Rest.Json.Parser
                 if (isPrimitive)
                 {
 
-                    pInf.SetValue(obj, kvp.Value);
+                    Type propertyType = Nullable.GetUnderlyingType(pInf.PropertyType) ?? pInf.PropertyType;
+
+                    object value = kvp.Value;
+
+                    if (value != null && value.GetType() != propertyType)
+                        value = Convert.ChangeType(value, propertyType);
+
+                    pInf.SetValue(obj, value);
 
                 }
                 else if (pInf.PropertyType.IsEnum)
@@ -221,7 +228,7 @@ namespace VeriFactu.Net.Rest.Json.Parser
 
         /// <summary>
         /// Devuelve el resultado de la deserialización
-        /// de la cadena JSON.
+        /// de la cadena JSON como un objeto dinámico.
         /// </summary>
         /// <returns>resultado de la deserialización
         /// de la cadena JSON.</returns>
@@ -248,8 +255,6 @@ namespace VeriFactu.Net.Rest.Json.Parser
         }
 
         #endregion
-
-
 
     }
 
