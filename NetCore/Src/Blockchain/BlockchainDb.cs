@@ -41,6 +41,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
+using System.Linq;
 using System.Windows.Markup;
 using VeriFactu.Common;
 using VeriFactu.Config;
@@ -121,9 +122,16 @@ namespace VeriFactu.Blockchain
             //var dir = $"{Settings.Current.BlockchainPath}{sellerID}";
             string tablename = BlockchainVarName + sellerID;
             var connectionstring = Settings.Current.ConnectionString;
-            if (!DbUtils.TableExists(connectionstring, tablename))
-                DbUtils.CreateTable(connectionstring, tablename);
-
+            if (DbUtils.DatabaseMdbExists(connectionstring))
+            {
+                if (!DbUtils.TableMdbExists(connectionstring, tablename))
+                    DbUtils.CreateTableMdb(connectionstring, tablename);
+            }
+            else
+            {
+                if (!DbUtils.TableExists(connectionstring, tablename))
+                    DbUtils.CreateTable(connectionstring, tablename);
+            }
             return sellerID;
 
         }
@@ -234,12 +242,15 @@ namespace VeriFactu.Blockchain
                 File.Delete(BlockchainVarName);
 
             }
-            else 
+            else
             {
 
                 // Escribo el valor de la variables actuales
                 string value = $"'{CurrentTimeStamp}{_CsvSeparator}{Current.Huella}{_CsvSeparator}{Current.IDFactura.FechaExpedicion}{_CsvSeparator}{Current.IDFactura.IDEmisor}{_CsvSeparator}{Current.IDFactura.NumSerie}'";
-                DbUtils.Update(Settings.Current.ConnectionString, BlockchainVarName, CurrentID, value);
+                if (DbUtils.DatabaseMdbExists(Settings.Current.ConnectionString))
+                    DbUtils.UpdateMdb(Settings.Current.ConnectionString, BlockchainVarName, CurrentID, value);
+                else
+                    DbUtils.Update(Settings.Current.ConnectionString, BlockchainVarName, CurrentID, value);
             }
 
 
@@ -435,26 +446,45 @@ namespace VeriFactu.Blockchain
         /// <exception cref="InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
         public static void LoadBlockchainsFromDb()
         {
+            bool usemdb = false;
+            List<string> tables;
             string connectionstring = Settings.Current.ConnectionString;
             if (string.IsNullOrEmpty(connectionstring))
                 throw new InvalidOperationException($"Revise el archivo de configuración {Settings.FileName}," +
                     $" el valor de ConnectionString debe ser el una cadena de conexión válida a la base de datos Verifactu.");
-            if (!DbUtils.DatabaseExists(connectionstring))
-            { 
-                DbUtils.CreateDatabase(connectionstring);
+            if (!DbUtils.DatabaseSqlExists(connectionstring))
+            {
+                usemdb = true;
+                if (DbUtils.DatabaseMdbExists(connectionstring))
+                    usemdb = true;
+                //DbUtils.CreateDatabaseMdb(connectionstring);
+                else
+                    DbUtils.CreateDatabase(connectionstring);
             }
 
-            var tables = DbUtils.GetDatabaseTablesOfId(connectionstring);//s´ha de revisar pel dni o cif
+
+            if (usemdb)
+            {
+                tables = DbUtils.GetDatabaseTablesMdbOfId(connectionstring);//s´ha de revisar pel dni o cif
+                //if (!tables.Any())
+                //    DbUtils.CreateTableMdb(connectionstring, "Blockchain");
+            }
+            else
+                tables = DbUtils.GetDatabaseTablesOfId(connectionstring);//s´ha de revisar pel dni o cif
+
 
             foreach (var table in tables)
             {
                 var sellerID = table.Replace("Blockchain", null);
                 var blockchain = new BlockchainDb(sellerID);
-
                 if (DbUtils.TableExists(connectionstring, blockchain.BlockchainVarName))
                 {
+                     string lineVarData;
+                    if (usemdb)
+                        lineVarData = DbUtils.ReadMdb(connectionstring, blockchain.BlockchainVarName);
+                    else
+                         lineVarData = DbUtils.Read(connectionstring, blockchain.BlockchainVarName);
 
-                    var lineVarData = DbUtils.Read(connectionstring, blockchain.BlockchainVarName);
                     if (string.IsNullOrEmpty(lineVarData))
                         continue;
 
